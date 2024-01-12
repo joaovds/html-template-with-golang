@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>Username</th>
+      <th>To Upper</th>
       <th>Email</th>
       <th>Link</th>
       <th>Languages</th>
@@ -13,6 +14,7 @@
     {{ range . }}
     <tr>
       <td>{{ .Name }}</td>
+      <td>{{ .Name | ToUpper }}</td>
       <td>{{ .Email }}</td>
       <td><a href="{{ .Link }}">{{ .Link }}</a></td>
       <td>{{ range .Languages }}{{ . }} {{ end }}</td>

@@ -3,6 +3,7 @@ package main
 import (
 	"html/template"
 	"os"
+	"strings"
 )
 
 type GithubProfile struct {
@@ -40,7 +41,9 @@ func main() {
     "./public/index.html",
   }
 
-  t := template.Must(template.New("index.html").ParseFiles(templates...))
+  t := template.New("index.html")
+  t.Funcs(template.FuncMap{"ToUpper": strings.ToUpper})
+  t = template.Must(t.ParseFiles(templates...))
   err := t.Execute(os.Stdout, profiles)
   if err != nil {
     panic(err)
