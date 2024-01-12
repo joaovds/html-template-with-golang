@@ -1,8 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
-	"os"
+	"net/http"
 	"strings"
 )
 
@@ -18,19 +19,19 @@ func main() {
     {
       Name: "Gandalf",
       Email: "gandalf@email.com",
-      Link: "github.com/gandalf",
+      Link: "https://github.com/gandalf",
       Languages: []string{"Go", "Elixir", "TypeScript"},
     },
     {
       Name: "Frodo",
       Email: "frodo@email.com",
-      Link: "github.com/frodo",
+      Link: "https://github.com/frodo",
       Languages: []string{"Crystal", "Rust", "Lua"},
     },
     {
       Name: "Sam",
       Email: "sam@email.com",
-      Link: "github.com/sam",
+      Link: "https://github.com/sam",
       Languages: []string{"Go", "Python", "JavaScript"},
     },
   }
@@ -41,11 +42,16 @@ func main() {
     "./public/index.html",
   }
 
-  t := template.New("index.html")
-  t.Funcs(template.FuncMap{"ToUpper": strings.ToUpper})
-  t = template.Must(t.ParseFiles(templates...))
-  err := t.Execute(os.Stdout, profiles)
-  if err != nil {
-    panic(err)
-  }
+  http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    t := template.New("index.html")
+    t.Funcs(template.FuncMap{"ToUpper": strings.ToUpper})
+    t = template.Must(t.ParseFiles(templates...))
+    err := t.Execute(w, profiles)
+    if err != nil {
+      panic(err)
+    }
+  })
+
+  fmt.Println("Server running on port 8080")
+  http.ListenAndServe(":8080", nil)
 }
