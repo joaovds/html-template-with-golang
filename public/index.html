@@ -1,33 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title></title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HTML template with Go</title>
-  </head>
+  {{ template "head.html" }}
   <body>
-    <h1>Github Profiles</h1>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Link</th>
-          <th>Languages</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{ range . }}
-        <tr>
-          <td>{{ .Name }}</td>
-          <td>{{ .Email }}</td>
-          <td><a href="{{ .Link }}">{{ .Link }}</a></td>
-          <td>{{ range .Languages }}{{ . }} {{ end }}</td>
-        </tr>
-        {{ end }}
-      </tbody>
-    </table>
+    {{ template "content.html" . }}
   </body>
 </html>

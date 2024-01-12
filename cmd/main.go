@@ -34,7 +34,13 @@ func main() {
     },
   }
 
-  t := template.Must(template.New("index.html").ParseFiles("./public/index.html"))
+  templates := []string{
+    "./public/head.html",
+    "./public/content.html",
+    "./public/index.html",
+  }
+
+  t := template.Must(template.New("index.html").ParseFiles(templates...))
   err := t.Execute(os.Stdout, profiles)
   if err != nil {
     panic(err)
